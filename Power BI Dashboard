@@ -1,0 +1,27 @@
+Dashboard Components
+KPIs
+•	Average AQI
+•	Most Polluted City
+•	Hazardous Zones Count
+•	Live AQI Status
+Visuals
+Visual	Purpose
+Heat Map	AQI by city
+Trend Line	Hourly AQI pattern
+Card Visual	Predicted risk zone
+Slicer	Filter by city/date
+Gauge Chart	AQI severity
+________________________________________
+Suggested to work on  Power BI Pages
+Page 1 — Executive Overview
+•	AQI KPI cards
+•	India AQI heatmap
+•	Top polluted cities
+Page 2 — Trend Monitoring
+•	Hourly trend line
+•	Seasonal AQI comparison
+•	Pollutant-wise analysis
+Page 3 — ML Prediction Dashboard
+•	Predicted risk badge
+•	High-risk alerts
+•	Future AQI trend prediction
