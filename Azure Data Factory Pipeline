@@ -1,0 +1,13 @@
+Azure Data Factory Pipeline
+Pipeline Flow
+1.	Schedule trigger every 1 hour
+2.	Execute Python ingestion script
+3.	Copy data into Azure SQL
+4.	Log ingestion status
+5.	Send alert on failure
+ADF Activities
+Activity	          Purpose
+Web Activity	      Trigger AQI API
+Copy Activity	      Move API data to SQL
+Stored Procedure	   Validate sensor data
+Failure Alert	       Notify on pipeline failure
