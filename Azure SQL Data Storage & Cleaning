@@ -1,0 +1,30 @@
+Create Table Script
+File: sql/create_tables.sql
+CREATE TABLE aqi_sensor_data (
+    id INT IDENTITY(1,1),
+    city VARCHAR(100),
+    aqi INT,
+    pollutant VARCHAR(50),
+    temperature FLOAT,
+    humidity FLOAT,
+    wind_speed FLOAT,
+    reading_time DATETIME
+);
+________________________________________
+Data Cleaning Using SQL CTE
+File: sql/data_cleaning.sql
+WITH CleanedAQI AS (
+    SELECT
+        city,
+        ISNULL(aqi, 0) AS aqi,
+        pollutant,
+        ISNULL(temperature, 0) AS temperature,
+        ISNULL(humidity, 0) AS humidity,
+        ISNULL(wind_speed, 0) AS wind_speed,
+        reading_time
+    FROM aqi_sensor_data
+)
+
+SELECT *
+FROM CleanedAQI
+WHERE aqi > 0;
