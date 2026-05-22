@@ -1,0 +1,32 @@
+Generate rolling averages and weather-enriched AQI insights.
+File: src/feature_engineering.py
+import pandas as pd
+
+# Load dataset
+
+df = pd.read_csv('../data/processed/aqi_cleaned.csv')
+
+# Convert datetime
+
+df['reading_time'] = pd.to_datetime(df['reading_time'])
+
+# Rolling 24-hour average
+
+df['rolling_24hr_avg'] = df['aqi'].rolling(window=24).mean()
+
+# AQI Category
+
+def categorize_aqi(aqi):
+    if aqi <= 50:
+        return 'Safe'
+    elif aqi <= 150:
+        return 'Moderate'
+    else:
+        return 'Hazardous'
+
+
+df['risk_zone'] = df['aqi'].apply(categorize_aqi)
+
+# Save output
+
+df.to_csv('../data/processed/feature_engineered.csv', index=False)
