@@ -1,0 +1,33 @@
+import requests
+import pandas as pd
+from datetime import datetime
+
+API_KEY = "YOUR_API_KEY"
+CITY = "Delhi"
+
+url = f"https://api.airvisual.com/v2/city?city={CITY}&state=Delhi&country=India&key={API_KEY}"
+
+response = requests.get(url)
+data = response.json()
+
+pollution = data['data']['current']['pollution']
+weather = data['data']['current']['weather']
+
+record = {
+    'city': CITY,
+    'aqius': pollution['aqius'],
+    'main_pollutant': pollution['mainus'],
+    'temperature': weather['tp'],
+    'humidity': weather['hu'],
+    'wind_speed': weather['ws'],
+    'timestamp': datetime.now()
+}
+
+
+df = pd.DataFrame([record])
+
+print(df)
+
+# Save locally
+
+df.to_csv('../data/raw/live_aqi.csv', mode='a', header=False, index=False)
