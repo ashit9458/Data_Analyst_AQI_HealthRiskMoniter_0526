@@ -1,0 +1,63 @@
+Objective
+Predict Health Risk Zones.
+Algorithm Used
+Random Forest Classifier
+Features
+•	AQI
+•	Humidity
+•	Temperature
+•	Wind Speed
+•	Rolling 24hr AQI Average
+Target
+•	Safe
+•	Moderate
+•	Hazardous
+________________________________________
+Model Training Script
+File: src/model_training.py
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+import joblib
+
+# Load data
+
+df = pd.read_csv('../data/processed/feature_engineered.csv')
+
+# Encode target
+
+mapping = {
+    'Safe': 0,
+    'Moderate': 1,
+    'Hazardous': 2
+}
+
+df['target'] = df['risk_zone'].map(mapping)
+
+# Features
+
+X = df[['aqi', 'humidity', 'temperature', 'wind_speed', 'rolling_24hr_avg']]
+
+y = df['target']
+
+# Split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train model
+
+model = RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+
+# Predictions
+
+predictions = model.predict(X_test)
+
+print(classification_report(y_test, predictions))
+
+# Save model
+
+joblib.dump(model, '../data/sample_output/aqi_rf_model.pkl')
